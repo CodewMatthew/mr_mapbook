@@ -1,10 +1,10 @@
-users = [
-    {"Name": "Matthew", "location": "Warszawa", "posts": 500},
-    {"Name": "Zofia", "location": "Poznań", "posts": 400},
-    {"Name": "Jakub", "location": "Biała Podlaska", "posts": 300},
-    {"Name": "Michał", "location": "Krasnystaw", "posts": 200},
+from Utils.controller import get_user_info
+from Utils.model import users
 
-]
+def main():
+    get_user_info(users)
 
-for user in users:
-    print(f"Twój znajomy  {user["Name"]}, z miejscowości {user["location"]} opublikował {user["posts"]} postów")
+
+
+    if __name__ == "__main__":
+    main()
