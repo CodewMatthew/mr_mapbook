@@ -1,4 +1,4 @@
-from Utils.controller import get_user_info, add_user
+from Utils.controller import get_user_info, add_user, remove_user
 from Utils.model import users
 
 
@@ -12,18 +12,11 @@ def main():
         print("4 - edytuj uzytkownika")
         print("===========menu=========")
 
-        choice = input("wybierz opcje menu")
-
-        if choice =='0':
-            break
-
-        if choice =='1' :
-            get_user_info(users)
-        if choice =='2' : add_user(users)
-
-
-
-
+        choice = input("wybierz opcje menu: ")
+        if choice =='0': break
+        if choice =='1': get_user_info(users)
+        if choice =='2': add_user(users)
+        if choice =='3': remove_user(users)
 
 if __name__ == "__main__":
         main()
