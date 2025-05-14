@@ -1,36 +1,30 @@
-users = [
-    {"Name": "Matthew", "location": "Warszawa", "posts": 500},
-    {"Name": "Zofia", "location": "Poznań", "posts": 400},
-    {"Name": "Jakub", "location": "Biała Podlaska", "posts": 300},
-    {"Name": "Michał", "location": "Krasnystaw", "posts": 200},
-
-]
-
-import folium
-
-import requests
-from bs4 import BeautifulSoup
-
-# https://pl.wikipedia.org/wiki/Przybysławice_(województwo_lubelskie)
-
-def get_coordinates(city:str)->list:
-
-    url=f'https://pl.wikipedia.org/wiki/{city}'
-    response = requests.get(url).text
-    response_html = BeautifulSoup(response, 'html.parser')
-    longitude=float(response_html.select('.longitude')[1].text. replace(',','.'))
-    latitude=float(response_html.select('.latitude')[1].text. replace(',','.'))
-    return [latitude,longitude]
+class User:
+    def __init__(self,name:str, surname:str, location:str, posts:str):
+        self.name=name
+        self.surname=surname
+        self.location=location
+        self.posts=posts
+        self.coordinates=self.get_coordinates()
 
 
-def get_map(users_data:list)->None:
-    map = folium.Map(location=(52.23, 21.00), zoom_start=6)
-    for user in users_data:
-        coordinates=get_coordinates(user['location'])
+    def get_coordinates(self) -> list:
+        import requests
+        from bs4 import BeautifulSoup
 
-        folium.Marker(
-            location=(coordinates[0],coordinates[1]),
-            popup=f"Twój znajomy  {user["Name"]}, <br/> miejscowość: {user["location"]} <br/> opublikował {user["posts"]} postów").add_to(map)
-    map.save('mapa.html')
+        url = f'https://pl.wikipedia.org/wiki/{self.location}'
+        response = requests.get(url).text
+        response_html = BeautifulSoup(response, 'html.parser')
+        longitude = float(response_html.select('.longitude')[1].text.replace(',', '.'))
+        latitude = float(response_html.select('.latitude')[1].text.replace(',', '.'))
+        return [latitude, longitude]
 
-get_map(users)
+
+
+
+
+user_1=User(name='aaa', surname='bbb', location='Warszawa', posts ='ddd')
+print(user_1.name,user_1.surname,user_1.location,user_1.posts, user_1.coordinates)
+
+user_2=User(name='eee', surname='fff', location='Kraków', posts='iii')
+print(user_2.name,user_2.surname,user_2.location,user_2.posts, user_2.coordinates)
+
